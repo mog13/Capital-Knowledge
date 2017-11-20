@@ -1,5 +1,5 @@
 let responseHelper = require("../responseHelper");
-const capitalPairs = require("./questionData").countries;
+const capitalPairs = require("../questionData").countries;
 
 function generateQuestion(capitalPair) {
     return "What is the capital of " + capitalPair.country;

@@ -1,4 +1,4 @@
-let gameController = require("./gameController");
+let gameController = require("../gameController");
 let responseHelper = require("../responseHelper");
 
 function generateQuestion(capitalPair) {
