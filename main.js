@@ -1,3 +1,5 @@
+const countries = require("./questionData").countries;
+
 exports.handler = function(event, context) {
     try {
         console.log("event.session.application.applicationId=" + event.session.application.applicationId);
