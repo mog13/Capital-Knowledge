@@ -1,14 +1,15 @@
 let gameController = require("../gameController");
 let responseHelper = require("../responseHelper");
+const capitalPairs = require("../questionData").countries;
 
 function generateQuestion(capitalPair) {
     return "What is the capital of " + capitalPair.country;
 }
 
-module.exports = function getWelcomeResponse(callback, capitalPairs) {
+module.exports = function getWelcomeResponse(callback) {
         let speechOutput = "Lets play capital knowledge!",
         shouldEndSession = false,
-        gameQuestions = gameController.populateGameQuestions(),
+        gameQuestions = gameController.populateGameQuestions(capitalPairs),
         currentQuestionIndex = 0,
         currentCapital = capitalPairs[gameQuestions[currentQuestionIndex]],
         spokenQuestion = generateQuestion(currentCapital),

@@ -17,7 +17,7 @@ module.exports = function handleAnswerRequest(intent, session, callback) {
         sessionAttributes.userPromptedToContinue = true;
         speechOutput = "There is no game in progress. Do you want to start a new game? ";
         callback(sessionAttributes,
-            responseHelper.buildSpeechletResponse(CARD_TITLE, speechOutput, speechOutput, false));
+            responseHelper.buildSpeechletResponse("Capital Knowledge", speechOutput, speechOutput, false));
     } else {
         let gameQuestions = session.attributes.questions,
             correctAnswer = session.attributes.correctAnswer,
@@ -33,7 +33,7 @@ module.exports = function handleAnswerRequest(intent, session, callback) {
             if (currentQuestionIndex == capitalPairs.length - 1) {
                 speechOutput += speechOutputAnalysis + "You got every capital correct! congratulations and thanks for playing!";
                 callback(session.attributes,
-                    responseHelper.buildSpeechletResponse(CARD_TITLE, speechOutput, "", true));
+                    responseHelper.buildSpeechletResponse("Capital Knowledge", speechOutput, "", true));
             }
 
         } else {
@@ -43,7 +43,7 @@ module.exports = function handleAnswerRequest(intent, session, callback) {
             speechOutputAnalysis += "Would you like to play again?";
             session.attributes.playAgain = true;
             callback(session.attributes,
-                responseHelper.buildSpeechletResponse(CARD_TITLE,speechOutputAnalysis, "", false));
+                responseHelper.buildSpeechletResponse("Capital Knowledge",speechOutputAnalysis, "", false));
         }
 
         currentQuestionIndex += 1;
