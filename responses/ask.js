@@ -2,16 +2,18 @@ let responseHelper = require("../responseHelper");
 const capitalPairs = require("../questionData").countries;
 
 function findCapital(country) {
-    return capitalPairs.find(cap => cap.country.toUpperCase() === country.toUpperCase()).capital
+    let ans =  capitalPairs.find(cap => cap.country.toUpperCase() === country.toUpperCase());
+    if (ans) return ans.capital;
+    return undefined;
 }
 
 function findCountry(capital) {
-    console.log("looking for " + capital)
-    return capitalPairs.find(cap => cap.capital.toUpperCase() === capital.toUpperCase()).country
+    let ans = capitalPairs.find(cap => cap.capital.toUpperCase() === capital.toUpperCase());
+    if (ans) return ans.country;
+    return undefined;
 }
 
 module.exports = function getWelcomeResponse(intent, session, callback) {
-    console.log("got to ask")
     let speechOutput = "",
         sessionAttributes;
     let gameInProgress = session.attributes && session.attributes.questions;
@@ -21,9 +23,7 @@ module.exports = function getWelcomeResponse(intent, session, callback) {
     }
     else {
         if(intent.name === "askCapitalIntent") {
-            console.log("got to ask capital")
             let capital = findCapital(intent.slots.country.value);
-            console.log(capital)
             if (capital) {
                 speechOutput = `the capital of ${intent.slots.country.value} is ${capital}`;
             }
@@ -32,9 +32,7 @@ module.exports = function getWelcomeResponse(intent, session, callback) {
             }
         }
         else{
-            console.log("got to ask country")
             let country = findCountry(intent.slots.Answer.value);
-            console.log(country)
             if (country) {
                 speechOutput = `${intent.slots.Answer.value} is the capital of ${country}`;
             }
