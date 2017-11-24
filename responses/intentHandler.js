@@ -2,7 +2,8 @@ let welcomeResponse = require("./welcome"),
     finishResponse = require("./finish"),
     repeatResponse = require("./repeat"),
     helpResponse = require("./help"),
-    answerResponse = require("./answer");
+    answerResponse = require("./answer"),
+    askResponse = require("./ask");
 
 
 module.exports = function onIntent(intentRequest, session, callback) {
@@ -26,10 +27,10 @@ module.exports = function onIntent(intentRequest, session, callback) {
         } else if ("AMAZON.YesIntent" === intentName) {
             welcomeResponse(callback);
         }
-    }else {
-
+    } else {
+        console.log(intentName)
         // dispatch custom intents to handlers here
-        if(["AnswerIntent","AnswerOnlyIntent","DontKnowIntent", "AMAZON.YesIntent","AMAZON.NoIntent"].indexOf(intentName) >0){
+        if (["AnswerIntent", "AnswerOnlyIntent", "DontKnowIntent", "AMAZON.YesIntent", "AMAZON.NoIntent"].indexOf(intentName) >= 0) {
             answerResponse(intent, session, callback);
         } else if ("AMAZON.StartOverIntent" === intentName) {
             welcomeResponse(callback);
@@ -41,6 +42,9 @@ module.exports = function onIntent(intentRequest, session, callback) {
             finishResponse(intent, session, callback);
         } else if ("AMAZON.CancelIntent" === intentName) {
             finishResponse(intent, session, callback);
+        } else if (["askCapitalIntent", "askCountryIntent"].indexOf(intentName) >= 0) {
+            console.log("got to call ask");
+            askResponse(intent, session, callback);
         }
         //@todo add a catchall if intent not recognized
     }
