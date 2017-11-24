@@ -4,7 +4,7 @@ const capitalPairs = require("../questionData").countries;
 let Splain = require("@mog13/splain");
 
 module.exports = function getWelcomeResponse(callback) {
-        let speechOutput = Splain.process("{{{{greeting '.'}}?2}} {{welcomeMsg}}. "),
+        let speechOutput = Splain.process("{{{{greeting ','}}?2}} {{welcomeMsg}}. "),
         gameQuestions = gameController.populateGameQuestions(capitalPairs),
         currentQuestionIndex = 0,
         currentCapital = capitalPairs[gameQuestions[currentQuestionIndex]],
