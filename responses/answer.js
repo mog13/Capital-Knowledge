@@ -7,15 +7,14 @@ module.exports = function handleAnswerRequest(intent, session, callback) {
     let speechOutput = "";
     let sessionAttributes = {};
     let gameInProgress = session.attributes && session.attributes.questions;
-    let userGaveUp = intent.name === "DontKnowIntent";
+    //let userGaveUp = intent.name === "DontKnowIntent"; @todo implement a differnt path for not knowing
 
     if (!gameInProgress) {
         // If the user responded with an answer but there is no game in progress, ask the user
         // if they want to start a new game. Set a flag to track that we've prompted the user.
         sessionAttributes.userPromptedToContinue = true;
         speechOutput = "There is no game in progress. Do you want to start a new game? ";
-        callback(sessionAttributes,
-            responseHelper.buildSpeechletResponse("Capital Knowledge", speechOutput, speechOutput, false));
+        callback(sessionAttributes, responseHelper.buildSpeechletResponse("Capital Knowledge", speechOutput, speechOutput, false));
     } else {
         let gameQuestions = session.attributes.questions,
             correctAnswer = session.attributes.correctAnswer,
