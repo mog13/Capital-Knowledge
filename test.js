@@ -8,4 +8,4 @@ askCapitalIntent what is the capital city of {country}
 askCapitalIntent {country} capital city
 askCapitalIntent {country} capital
 
-where is Cario
+where is Cairo
