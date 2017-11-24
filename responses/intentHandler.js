@@ -42,5 +42,6 @@ module.exports = function onIntent(intentRequest, session, callback) {
         } else if ("AMAZON.CancelIntent" === intentName) {
             finishResponse(intent, session, callback);
         }
+        //@todo add a catchall if intent not recognized
     }
 };

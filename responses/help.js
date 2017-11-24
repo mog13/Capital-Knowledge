@@ -5,7 +5,6 @@ module.exports = function handleGetHelpRequest(intent, session, callback) {
     if (session.attributes) {
         session.attributes.userPromptedToContinue = true;
     } else {
-        // In case user invokes and asks for help simultaneously.
         session.attributes = {
             userPromptedToContinue: true
         };
@@ -15,7 +14,6 @@ module.exports = function handleGetHelpRequest(intent, session, callback) {
         "To repeat the last question, say, repeat. " +
         "Would you like to keep playing?",
         repromptText = "Would you like to keep playing?";
-    let shouldEndSession = false;
     callback(session.attributes,
-        responseHelper.buildSpeechletResponseWithoutCard(speechOutput, repromptText, shouldEndSession));
+        responseHelper.buildSpeechletResponseWithoutCard(speechOutput, repromptText, false));
 };
