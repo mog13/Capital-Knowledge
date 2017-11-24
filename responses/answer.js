@@ -1,11 +1,9 @@
 let responseHelper = require("../responseHelper");
 const capitalPairs = require("../questionData").countries;
-
-function generateQuestion(capitalPair) {
-    return "What is the capital of " + capitalPair.country;
-}
+let Splain = require("@mog13/splain");
 
 module.exports = function handleAnswerRequest(intent, session, callback) {
+    console.log("splain is " + Splain === undefined);
     let speechOutput = "";
     let sessionAttributes = {};
     let gameInProgress = session.attributes && session.attributes.questions;
@@ -28,8 +26,9 @@ module.exports = function handleAnswerRequest(intent, session, callback) {
         //If they are correct
         if (intent.slots && intent.slots.Answer && intent.slots.Answer.value.toUpperCase() == correctAnswer.toUpperCase()) {
             currentScore++;
-            speechOutputAnalysis = "correct. ";
-
+            console.log("andwe is correct");
+            speechOutputAnalysis = Splain.process("{{{{congrats ','}}?2}} that is {{correct}}. ");
+            console.log("speechOutputAnalysis " + JSON.stringify(speechOutputAnalysis));
             if (currentQuestionIndex == capitalPairs.length - 1) {
                 speechOutput += speechOutputAnalysis + "You got every capital correct! congratulations and thanks for playing!";
                 callback(session.attributes,
@@ -38,31 +37,33 @@ module.exports = function handleAnswerRequest(intent, session, callback) {
 
         } else {
             //if they are wrong
-            speechOutputAnalysis += "Sorry the correct answer is " + correctAnswer + ". ";
-            speechOutputAnalysis += "You scored "+ session.attributes.score + ". ";
-            speechOutputAnalysis += "Would you like to play again?";
+            speechOutputAnalysis += Splain.process(`{{onWrong.reply}} {{onWrong.correctReveal}} is ${correctAnswer}. `);
+            speechOutputAnalysis += Splain.process(`{{score.end}} ${session.attributes.score}. `);
+            speechOutputAnalysis += Splain.process(`{{again.question}} {{again.action}}?`);
+            console.log("speechOutputAnalysis " + JSON.stringify(speechOutputAnalysis));
             session.attributes.playAgain = true;
             callback(session.attributes,
                 responseHelper.buildSpeechletResponse("Capital Knowledge",speechOutputAnalysis, "", false));
         }
 
         currentQuestionIndex += 1;
-        let spokenQuestion = generateQuestion(capitalPairs[gameQuestions[currentQuestionIndex]]);
-        correctAnswer = capitalPairs[gameQuestions[currentQuestionIndex]].capital;
-        let repromptText = spokenQuestion;
+        let capitalPair = capitalPairs[gameQuestions[currentQuestionIndex]];
+        let spokenQuestion =  Splain.process("{{questionPrompt}}")  + capitalPair.country;
+        correctAnswer = capitalPair.capital;
+        let question = spokenQuestion;
 
-        speechOutput += speechOutputAnalysis + "Your score is " + currentScore.toString() + ". " + repromptText;
-
+        speechOutput += speechOutputAnalysis + Splain.process(`{{score.active}}  ${currentScore.toString()}. `) + question;
+        console.log("speechOutput " + JSON.stringify(speechOutput));
         sessionAttributes = {
-            "speechOutput": repromptText,
-            "repromptText": repromptText,
+            "speechOutput": question,
+            "repromptText": question,
             "currentQuestionIndex": currentQuestionIndex,
             "correctAnswer": correctAnswer,
             "questions": gameQuestions,
             "score": currentScore,
         };
         callback(sessionAttributes,
-            responseHelper.buildSpeechletResponse("Capital Knowledge", speechOutput, repromptText, false));
+            responseHelper.buildSpeechletResponse("Capital Knowledge", speechOutput, question, false));
 
     }
-}
+};
