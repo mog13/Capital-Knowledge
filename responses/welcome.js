@@ -1,18 +1,17 @@
 let gameController = require("../gameController");
 let responseHelper = require("../responseHelper");
 const capitalPairs = require("../questionData").countries;
+let Splain = require("@mog13/splain");
 
-function generateQuestion(capitalPair) {
-    return "What is the capital of " + capitalPair.country;
-}
+
 
 module.exports = function getWelcomeResponse(callback) {
-        let speechOutput = "Lets play capital knowledge!",
+        let speechOutput = Splain.process("{{{{greeting '.'}}?2}} {{welcomeMsg}}. "),
         shouldEndSession = false,
         gameQuestions = gameController.populateGameQuestions(capitalPairs),
         currentQuestionIndex = 0,
         currentCapital = capitalPairs[gameQuestions[currentQuestionIndex]],
-        spokenQuestion = generateQuestion(currentCapital),
+        spokenQuestion = Splain.process("{{questionPrompt}}")  + currentCapital.country,
         correctAnswer = currentCapital.capital;
 
     speechOutput += spokenQuestion;
@@ -24,6 +23,7 @@ module.exports = function getWelcomeResponse(callback) {
         "questions": gameQuestions,
         "score": 0,
     };
+
     callback(sessionAttributes,
         responseHelper.buildSpeechletResponse("Capital knowledge", speechOutput, spokenQuestion, shouldEndSession));
 };

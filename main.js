@@ -3,7 +3,7 @@ let responseHelper = require("./responseHelper");
 
 let welcomeResponse = require("./responses/welcome");
 let intentHandler = require("./responses/intentHandler");
-
+require("./splainBuilder");
 
 exports.handler = function(event, context) {
     try {

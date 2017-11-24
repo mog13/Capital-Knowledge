@@ -29,8 +29,7 @@ module.exports = function onIntent(intentRequest, session, callback) {
     }else {
 
         // dispatch custom intents to handlers here
-
-        if(["AnswerIntent","DontKnowIntent", "AMAZON.YesIntent","AMAZON.NoIntent"].indexOf(intentName) >0){
+        if(["AnswerIntent","AnswerOnlyIntent","DontKnowIntent", "AMAZON.YesIntent","AMAZON.NoIntent"].indexOf(intentName) >0){
             answerResponse(intent, session, callback);
         } else if ("AMAZON.StartOverIntent" === intentName) {
             welcomeResponse(callback);
