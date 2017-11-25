@@ -11,8 +11,8 @@ Splain.addEntry({
         in: ["in", "of"]
     },
     onWrong: {
-        reply: ["{{onWrong.apology?2}} {{onWrong.pronoun}} {{onWrong.answerNoun}} is {{'sadly'?3}} {{onWrong.wrong}}."],
-        apology: ["sorry", "I'm sorry", "unfortunately", "sadly", "unlucky,", "sadly", "regrettably"],
+        reply: ["{{onWrong.apology?2}}{{onWrong.pronoun}} {{onWrong.answerNoun}} is {{'sadly'?3}} {{onWrong.wrong}}."],
+        apology: ["sorry, ", "I'm sorry, ", "unfortunately, ", "sadly, ", "unlucky, ", "sadly, ", "regrettably, "],
         pronoun: ["that", "your"],
         answerNoun: ["answer", "guess"],
         wrong: ["wrong", "incorrect", "not correct", "not right", "not the answer", "erroneous", "inaccurate", "mistaken", "false"],

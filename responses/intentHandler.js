@@ -28,7 +28,6 @@ module.exports = function onIntent(intentRequest, session, callback) {
             welcomeResponse(callback);
         }
     } else {
-        console.log(intentName)
         // dispatch custom intents to handlers here
         if (["AnswerIntent", "AnswerOnlyIntent", "DontKnowIntent", "AMAZON.YesIntent", "AMAZON.NoIntent"].indexOf(intentName) >= 0) {
             answerResponse(intent, session, callback);
@@ -43,7 +42,6 @@ module.exports = function onIntent(intentRequest, session, callback) {
         } else if ("AMAZON.CancelIntent" === intentName) {
             finishResponse(intent, session, callback);
         } else if (["askCapitalIntent", "askCountryIntent"].indexOf(intentName) >= 0) {
-            console.log("got to call ask");
             askResponse(intent, session, callback);
         }
         //@todo add a catchall if intent not recognized
