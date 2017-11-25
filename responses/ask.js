@@ -2,14 +2,18 @@ let responseHelper = require("../responseHelper");
 const capitalPairs = require("../questionData").countries;
 
 function findCapital(country) {
-    let ans =  capitalPairs.find(cap => cap.country.toUpperCase() === country.toUpperCase());
-    if (ans) return ans.capital;
+    if (country) {
+        let ans = capitalPairs.find(cap => cap.country.toUpperCase() === country.toUpperCase());
+        if (ans) return ans.capital;
+    }
     return undefined;
 }
 
 function findCountry(capital) {
-    let ans = capitalPairs.find(cap => cap.capital.toUpperCase() === capital.toUpperCase());
-    if (ans) return ans.country;
+    if (capital) {
+        let ans = capitalPairs.find(cap => cap.capital.toUpperCase() === capital.toUpperCase());
+        if (ans) return ans.country;
+    }
     return undefined;
 }
 
@@ -22,7 +26,7 @@ module.exports = function getWelcomeResponse(intent, session, callback) {
         sessionAttributes = session.attributes;
     }
     else {
-        if(intent.name === "askCapitalIntent") {
+        if (intent.name === "askCapitalIntent") {
             let capital = findCapital(intent.slots.country.value);
             if (capital) {
                 speechOutput = `the capital of ${intent.slots.country.value} is ${capital}`;
@@ -31,7 +35,7 @@ module.exports = function getWelcomeResponse(intent, session, callback) {
                 speechOutput = "sorry, i dont know";
             }
         }
-        else{
+        else {
             let country = findCountry(intent.slots.Answer.value);
             if (country) {
                 speechOutput = `${intent.slots.Answer.value} is the capital of ${country}`;

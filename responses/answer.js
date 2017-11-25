@@ -21,7 +21,7 @@ module.exports = function handleAnswerRequest(intent, session, callback) {
             currentQuestionIndex = parseInt(session.attributes.currentQuestionIndex);
 
         //If they are correct
-        if (intent.slots && intent.slots.Answer && intent.slots.Answer.value.toUpperCase() === correctAnswer.toUpperCase()) {
+        if (intent.slots && intent.slots.Answer && intent.slots.Answer.value && intent.slots.Answer.value.toUpperCase() === correctAnswer.toUpperCase()) {
             currentScore++;
             speechOutput = Splain.process("{{{{congrats ','}}?2}} that is {{correct}}. ");
             if (currentQuestionIndex === capitalPairs.length - 1) {
